@@ -1,0 +1,29 @@
+if ARCH_XINJIE
+
+config MACH_XINJIE_H3
+	bool "xinjie H3"
+	select CPU_V7
+	select CPU_V7_HAS_NONSEC
+	select CPU_V7_HAS_VIRT
+	select SUPPORT_SPL
+	select ARMV7_BOOT_SEC_DEFAULT if OLD_SUNXI_KERNEL_COMPAT
+
+
+config MACH_XINJIE
+	bool
+	default y if MACH_XINJIE_H3
+
+#配置系统时钟
+config SYS_CLK_FREQ
+	default 1008000000 if MACH_XINJIE
+
+config SYS_CONFIG_NAME
+	default "xin8i" if MACH_XINJIE
+
+config SYS_BOARD
+	default "xinjieH3"
+
+config SYS_SOC
+	default "xinjie"
+
+endif
