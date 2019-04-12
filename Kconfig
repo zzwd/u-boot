@@ -185,7 +185,7 @@ config SYS_TEXT_BASE
 	  TODO: Move CONFIG_SYS_TEXT_BASE for all the architecture
 
 config SYS_CLK_FREQ
-	depends on ARC || ARCH_SUNXI
+	depends on ARC || ARCH_SUNXI || ARCH_XINJIE
 	int "CPU clock frequency"
 	help
 	  TODO: Move CONFIG_SYS_CLK_FREQ for all the architecture
