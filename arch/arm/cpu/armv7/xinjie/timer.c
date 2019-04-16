@@ -10,8 +10,6 @@
  * On ARM it returns the number of timer ticks per second.
  */
 #include <common.h>
-#include <asm/io.h>
-#include <asm/arch/timer.h>
 
 DECLARE_GLOBAL_DATA_PTR;
 

@@ -10,16 +10,9 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 #include <common.h>
-#include <mmc.h>
-#include <i2c.h>
-#include <serial.h>
 #ifdef CONFIG_SPL_BUILD
 #include <spl.h>
 #endif
-#include <asm/gpio.h>
-#include <asm/io.h>
-#include <asm/arch/gpio.h>
-#include <asm/arch/spl.h>
 
 #include <linux/compiler.h>
 
@@ -34,7 +27,6 @@ void board_init_f(ulong dummy)
 {
 	
 }
-
 #endif
 
 void reset_cpu(ulong addr)

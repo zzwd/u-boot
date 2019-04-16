@@ -88,17 +88,8 @@ config ARCH_SUNXI
 
 config ARCH_XINJIE
 	bool "Support xinjie Allwinner H3 SoCs"
-	select CMD_USB
 	select DM
-	select DM_GPIO
-	select DM_ETH
 	select DM_SERIAL
-	select DM_USB
-	select OF_CONTROL
-	select OF_SEPARATE
-	select USB
-	select USB_STORAGE
-	select USB_KEYBOARD
 
 endchoice
 

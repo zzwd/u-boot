@@ -8,9 +8,4 @@
 obj-y	+= timer.o
 obj-y	+= board.o
 
-ifndef CONFIG_SPL_BUILD
-ifdef CONFIG_ARMV7_PSCI
-obj-y	+= psci.o
-endif
-endif
 
