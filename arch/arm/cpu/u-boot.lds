@@ -25,6 +25,9 @@ SECTIONS
 		*(.text*)
 	}
 
+	.plt : { *(.plt) }
+	.rel.plt : { *(.rel.plt) }
+	
 #ifdef CONFIG_ARMV7_NONSEC
 
 #ifndef CONFIG_ARMV7_SECURE_BASE
