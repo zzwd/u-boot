@@ -3,7 +3,7 @@ if ARCH_XINJIE
 config MACH_XINJIE_H3
 	bool "xinjie H3"
 	select CPU_V7
-
+	select SUPPORT_SPL
 
 config MACH_XINJIE
 	bool

@@ -13,7 +13,12 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
+/* init timer register */
+int timer_init(void)
+{
 
+	return 0;
+}
 
 
 ulong get_tbclk(void)

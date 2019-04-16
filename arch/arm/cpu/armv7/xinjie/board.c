@@ -23,6 +23,11 @@ void s_init(void)
 }
 
 #ifdef CONFIG_SPL_BUILD
+u32 spl_boot_device(void)
+{
+	return -1;		/* Never reached */
+}
+
 void board_init_f(ulong dummy)
 {
 	
