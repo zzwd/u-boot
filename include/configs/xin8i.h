@@ -60,7 +60,16 @@
 #define CONFIG_SPL_LIBCOMMON_SUPPORT
 #define CONFIG_SPL_LIBGENERIC_SUPPORT
 
-#define CONFIG_SPL_TEXT_BASE		0x60		/* sram start+header */
+/*
+ *参考sunxi官网链接http://linux-sunxi.org/BROM，可以看到U-Boot SPL limitations部分
+ *Allwinner H3
+ *1、SPL size limit on MMC is 32 KiB，也就是CONFIG_SPL_MAX_SIZE参数不能大于32，这里设置成24KiB
+ *2、SPL load address is 0x00000,也就是CONFIG_SPL_TEXT_BASE应该设置成0x00000，这里设置成0x60，最新版Uboot设置成0x20，
+ *估计是考虑到SPL的校验头，我看了编译成功后的spl/u-boot-spl.map感觉没有必要，直接设置成0x00000即可
+ *3、CONFIG_SPL_STACK参数设置成32KiB的位置，我们看Allwinner H3的数据手册可以SRAM A1的大小为64KiB，设置32KiB没有问题，
+ *同时和SPL代码结束位置大约有8K（CONFIG_SPL_STACK-CONFIG_SPL_MAX_SIZE）作为堆栈容量
+ */
+#define CONFIG_SPL_TEXT_BASE		0x00000		/* sram start+header */
 #define CONFIG_SPL_MAX_SIZE			0x5fa0		/* 24KB on sun4i/sun7i */
 #define LOW_LEVEL_SRAM_STACK		0x00008000	/* End of sram */
 

@@ -19,7 +19,7 @@
 
 void s_init(void)
 {
-
+	
 }
 
 #ifdef CONFIG_SPL_BUILD

@@ -14,6 +14,9 @@
  *
  * SPDX-License-Identifier:	GPL-2.0+
  */
+
+/* MEMORY相关在include/configs/xin8i.h中定义 */
+
 MEMORY { .sram : ORIGIN = CONFIG_SPL_TEXT_BASE,\
 		LENGTH = CONFIG_SPL_MAX_SIZE }
 MEMORY { .sdram : ORIGIN = CONFIG_SPL_BSS_START_ADDR, \
@@ -33,10 +36,14 @@ SECTIONS
 	} > .sram
 
 	. = ALIGN(4);
-	.rodata : { *(SORT_BY_ALIGNMENT(.rodata*)) } >.sram
+	.rodata : { 
+		*(SORT_BY_ALIGNMENT(.rodata*)) 		/*只读数据段*/
+	} >.sram
 
 	. = ALIGN(4);
-	.data : { *(SORT_BY_ALIGNMENT(.data*)) } >.sram
+	.data : { 
+		*(SORT_BY_ALIGNMENT(.data*)) 		/*指定读/写数据段*/
+	} >.sram
 
 	. = ALIGN(4);
 	.u_boot_list : {
@@ -54,5 +61,5 @@ SECTIONS
 		*(.bss*)
 		. = ALIGN(4);
 		__bss_end = .;
-	} > .sdram
+	} > .sdram								/*在SPL阶段sdram还没有初始化，BSS段指定到sdram不会有问题？*/
 }
