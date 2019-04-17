@@ -41,7 +41,7 @@
  * Exception vectors as described in ARM reference manuals
  *
  * Uses indirect branch to allow reaching handlers anywhere in memory.
- *
+ * 设置异常向量表
  *************************************************************************
  */
 
@@ -92,11 +92,11 @@ _fiq:			.word fiq
  *************************************************************************
  *
  * Interrupt handling
- *
+ * 异常处理
  *************************************************************************
  */
 
-/* SPL interrupt handling: just hang */
+/* SPL interrupt handling: just hang 在SPL阶段产生异常直接挂起 */
 
 #ifdef CONFIG_SPL_BUILD
 
@@ -110,9 +110,9 @@ irq:
 fiq:
 
 1:
-	bl	1b			/* hang and never return */
+	bl	1b			/* hang and never return  挂起不返回*/
 
-#else	/* !CONFIG_SPL_BUILD */
+#else	/* !CONFIG_SPL_BUILD 在不是SPL阶段跳转到相应的异常处理程序*/
 
 /* IRQ stack memory (calculated at run-time) + 8 bytes */
 .globl IRQ_STACK_START_IN

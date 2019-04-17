@@ -22,7 +22,7 @@
  *
  * Startup Code (reset vector)
  *
- * Do important init only if we don't start from memory!
+ * Do important init only if we do not start from memory!
  * Setup memory and board specific bits prior to relocation.
  * Relocate armboot to ram. Setup stack.
  *
@@ -35,7 +35,7 @@ reset:
 	/* Allow the board to save important registers */
 	b	save_boot_params
 save_boot_params_ret:
-	/*
+	/* 关闭中断，同时设置CPU为SVC32模式
 	 * disable interrupts (FIQ and IRQ), also set the cpu to SVC32 mode,
 	 * except if in HYP mode already
 	 */
@@ -51,6 +51,7 @@ save_boot_params_ret:
  * Setup vector:
  * (OMAP4 spl TEXT_BASE is not 32 byte aligned.
  * Continue to use ROM code vector only in OMAP4 spl)
+ * 条件不满足，忽略
  */
 #if !(defined(CONFIG_OMAP44XX) && defined(CONFIG_SPL_BUILD))
 	/* Set V=0 in CP15 SCTLR register - for VBAR to point to vector */
@@ -65,11 +66,11 @@ save_boot_params_ret:
 
 	/* the mask ROM code should have PLL and others stable */
 #ifndef CONFIG_SKIP_LOWLEVEL_INIT
-	bl	cpu_init_cp15
-	bl	cpu_init_crit
+	bl	cpu_init_cp15 	/*初始化协处理器*/
+	bl	cpu_init_crit 	/*调用lowlevel_init板级初始化*/
 #endif
 
-	bl	_main
+	bl	_main			/*调用C代码*/
 
 /*------------------------------------------------------------------------------*/
 
@@ -93,7 +94,7 @@ ENDPROC(c_runtime_cpu_setup)
  *	__attribute__((weak));
  *
  * Stack pointer is not yet initialized at this moment
- * Don't save anything to stack even if compiled with -O0
+ * Do not save anything to stack even if compiled with -O0
  *
  *************************************************************************/
 ENTRY(save_boot_params)
@@ -112,6 +113,7 @@ ENDPROC(save_boot_params)
 ENTRY(cpu_init_cp15)
 	/*
 	 * Invalidate L1 I/D
+	 * 关闭L1 I/D 
 	 */
 	mov	r0, #0			@ set up for MCR
 	mcr	p15, 0, r0, c8, c7, 0	@ invalidate TLBs
@@ -122,6 +124,7 @@ ENTRY(cpu_init_cp15)
 
 	/*
 	 * disable MMU stuff and caches
+	 * 关闭MMU 和 caches
 	 */
 	mrc	p15, 0, r0, c1, c0, 0
 	bic	r0, r0, #0x00002000	@ clear bits 13 (--V-)
@@ -257,7 +260,7 @@ ENDPROC(cpu_init_cp15)
  *
  * setup important registers
  * setup memory timing
- *
+ * 调用arch/arm/cpu/armv7/lowlevel_init.S
  *************************************************************************/
 ENTRY(cpu_init_crit)
 	/*
@@ -266,6 +269,7 @@ ENTRY(cpu_init_crit)
 	 * basic memory. Go here to bump up clock rate and handle
 	 * wake up conditions.
 	 */
-	b	lowlevel_init		@ go setup pll,mux,memory
+	bl 	debug_led
+	b	lowlevel_init		@ go setup pll,mux,memory  /*初始化PLL时钟、mux和内存*/
 ENDPROC(cpu_init_crit)
 #endif
