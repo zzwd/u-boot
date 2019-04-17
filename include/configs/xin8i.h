@@ -36,6 +36,8 @@
  * High Level Configuration Options
  */
 #define CONFIG_XINJIE		/* xinjie family */
+#define CONFIG_DEBUG_LED
+
 #ifdef CONFIG_SPL_BUILD
 #define CONFIG_SYS_THUMB_BUILD	/* Thumbs mode to save space in SPL */
 #endif
@@ -95,13 +97,6 @@
 #define CONFIG_BAUDRATE			115200
 
 #define CONFIG_SPL_LDSCRIPT "arch/arm/cpu/armv7/xinjie/u-boot-spl.lds"
-
-
-
-
-
-
-
 
 
 

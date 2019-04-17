@@ -12,6 +12,10 @@ obj-y	+= cache_v7.o
 obj-y	+= cpu.o cp15.o
 obj-y	+= syslib.o
 
+ifneq ($(CONFIG_DEBUG_LED),)
+obj-$(CONFIG_ARCH_XINJIE) 	+= debug_led.o
+endif
+
 ifneq ($(CONFIG_SUNXI)$(CONFIG_XINJIE),)
 ifneq ($(CONFIG_SKIP_LOWLEVEL_INIT),y)
 obj-y	+= lowlevel_init.o
