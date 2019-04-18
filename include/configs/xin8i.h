@@ -36,7 +36,10 @@
  * High Level Configuration Options
  */
 #define CONFIG_XINJIE		/* xinjie family */
+
+#ifdef CONFIG_XINJIE
 #define CONFIG_DEBUG_LED
+#endif
 
 #ifdef CONFIG_SPL_BUILD
 #define CONFIG_SYS_THUMB_BUILD	/* Thumbs mode to save space in SPL */
@@ -69,7 +72,7 @@
  *3、CONFIG_SPL_STACK参数设置成32KiB的位置，我们看Allwinner H3的数据手册可以SRAM A1的大小为64KiB，设置32KiB没有问题，
  *同时和SPL代码结束位置大约有8K（CONFIG_SPL_STACK-CONFIG_SPL_MAX_SIZE）作为堆栈容量
  */
-#define CONFIG_SPL_TEXT_BASE		0x00000		/* sram start+header */
+#define CONFIG_SPL_TEXT_BASE		0x60		/* sram start+header */
 #define CONFIG_SPL_MAX_SIZE			0x5fa0		/* 24KB on sun4i/sun7i */
 #define LOW_LEVEL_SRAM_STACK		0x00008000	/* End of sram */
 

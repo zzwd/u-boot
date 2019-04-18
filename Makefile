@@ -1071,6 +1071,14 @@ u-boot-sunxi-with-spl.bin: spl/sunxi-spl.bin \
 	$(call if_changed,pad_cat)
 endif
 
+ifneq ($(CONFIG_XINJIE),)
+OBJCOPYFLAGS_u-boot-xinjie-with-spl.bin = -I binary -O binary \
+				   --pad-to=$(CONFIG_SPL_PAD_TO) --gap-fill=0xff
+u-boot-xinjie-with-spl.bin: spl/xinjie-spl.bin \
+			u-boot$(if $(CONFIG_OF_CONTROL),-dtb,).img FORCE
+	$(call if_changed,pad_cat)
+endif
+
 ifneq ($(CONFIG_TEGRA),)
 OBJCOPYFLAGS_u-boot-nodtb-tegra.bin = -O binary --pad-to=$(CONFIG_SYS_TEXT_BASE)
 u-boot-nodtb-tegra.bin: spl/u-boot-spl u-boot.bin FORCE
@@ -1308,6 +1316,9 @@ spl/u-boot-spl: tools prepare $(if $(CONFIG_OF_SEPARATE),dts/dt.dtb)
 	$(Q)$(MAKE) obj=spl -f $(srctree)/scripts/Makefile.spl all
 
 spl/sunxi-spl.bin: spl/u-boot-spl
+	@:
+
+spl/xinjie-spl.bin: spl/u-boot-spl
 	@:
 
 spl/u-boot-spl-dtb.sfp: spl/u-boot-spl

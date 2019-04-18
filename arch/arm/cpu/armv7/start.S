@@ -269,7 +269,10 @@ ENTRY(cpu_init_crit)
 	 * basic memory. Go here to bump up clock rate and handle
 	 * wake up conditions.
 	 */
+#ifdef CONFIG_DEBUG_LED
 	bl 	debug_led
+#endif
+
 	b	lowlevel_init		@ go setup pll,mux,memory  /*初始化PLL时钟、mux和内存*/
 ENDPROC(cpu_init_crit)
 #endif

@@ -142,6 +142,10 @@ ifdef CONFIG_SUNXI
 ALL-y	+= $(obj)/sunxi-spl.bin
 endif
 
+ifdef CONFIG_XINJIE
+ALL-y	+= $(obj)/xinjie-spl.bin
+endif
+
 ifeq ($(CONFIG_SYS_SOC),"at91")
 ALL-y	+= boot.bin
 endif
@@ -216,6 +220,13 @@ ifdef CONFIG_SUNXI
 quiet_cmd_mksunxiboot = MKSUNXI $@
 cmd_mksunxiboot = $(objtree)/tools/mksunxiboot $< $@
 $(obj)/sunxi-spl.bin: $(obj)/$(SPL_BIN).bin
+	$(call if_changed,mksunxiboot)
+endif
+
+ifdef CONFIG_XINJIE
+quiet_cmd_mksunxiboot = MKSUNXI $@
+cmd_mksunxiboot = $(objtree)/tools/mksunxiboot $< $@
+$(obj)/xinjie-spl.bin: $(obj)/$(SPL_BIN).bin
 	$(call if_changed,mksunxiboot)
 endif
 

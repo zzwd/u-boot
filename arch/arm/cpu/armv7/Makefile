@@ -13,7 +13,7 @@ obj-y	+= cpu.o cp15.o
 obj-y	+= syslib.o
 
 ifneq ($(CONFIG_DEBUG_LED),)
-obj-$(CONFIG_ARCH_XINJIE) 	+= debug_led.o
+obj-y 	+= debug_led.o
 endif
 
 ifneq ($(CONFIG_SUNXI)$(CONFIG_XINJIE),)

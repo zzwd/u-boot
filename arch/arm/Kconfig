@@ -90,6 +90,8 @@ config ARCH_XINJIE
 	bool "Support xinjie Allwinner H3 SoCs"
 	select DM
 	select DM_SERIAL
+	select OF_CONTROL
+	select OF_SEPARATE
 	
 endchoice
 
