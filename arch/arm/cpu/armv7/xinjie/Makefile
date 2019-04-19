@@ -11,3 +11,4 @@ obj-y	+= clock.o
 obj-y	+= clock_xin8i.o
 obj-y	+= tzpc.o
 obj-y	+= prcm.o
+obj-y	+= pinmux.o

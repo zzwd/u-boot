@@ -14,11 +14,25 @@
 #include <spl.h>
 #endif
 
+#include <asm/arch/gpio.h>
 #include <asm/arch/clock.h>
 #include <asm/arch/tzpc.h>
 
 #include <linux/compiler.h>
 
+static int gpio_init(void)
+{
+	/*配置UART0*/
+#if CONFIG_CONS_INDEX == 1 && defined(CONFIG_MACH_XINJIE_H3)
+	sunxi_gpio_set_cfgpin(SUNXI_GPA(4), SUN8I_H3_GPA_UART0);
+	sunxi_gpio_set_cfgpin(SUNXI_GPA(5), SUN8I_H3_GPA_UART0);
+	sunxi_gpio_set_pull(SUNXI_GPA(5), SUNXI_GPIO_PULL_UP);
+#else
+#error Unsupported console port number. Please fix pin mux settings in board.c
+#endif
+
+	return 0;
+}
 
 void s_init(void)
 {
@@ -33,8 +47,8 @@ void s_init(void)
 	clock_init(); 	/*PLL时钟初始化*/
 	timer_init();	/*定时器初始化*/
 					/*看门狗默认是关闭的，可查看allwinner H3数据手册4.6 Timer/4.6.4小节中*/
+	gpio_init(); 	/*GPIO 初始化*/
 	/*
-	gpio_init();
 	i2c_init_board();
 	*/
 }
