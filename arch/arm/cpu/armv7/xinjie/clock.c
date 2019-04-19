@@ -11,7 +11,6 @@
 #include <common.h>
 #include <asm/io.h>
 #include <asm/arch/clock.h>
-//#include <asm/arch/gpio.h>
 #include <asm/arch/sys_proto.h>
 
 int clock_init(void)

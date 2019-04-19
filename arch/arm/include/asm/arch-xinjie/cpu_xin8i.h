@@ -26,6 +26,7 @@
 #define SUNXI_CCM_BASE			0x01c20000
 #define SUNXI_TZPC_BASE			0x01c23400
 #define SUNXI_PRCM_BASE			0x01f01400
+#define SUNXI_TIMER_BASE		0x01c20c00
 
 #ifndef __ASSEMBLY__
 void xinjie_board_init(void);

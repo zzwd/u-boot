@@ -31,8 +31,9 @@ void s_init(void)
 	/* Enable non-secure access to some peripherals */
 	tzpc_init(); 	/*启用对所有外围设备的非安全访问*/
 	clock_init(); 	/*PLL时钟初始化*/
+	timer_init();	/*定时器初始化*/
+					/*看门狗默认是关闭的，可查看allwinner H3数据手册4.6 Timer/4.6.4小节中*/
 	/*
-	timer_init();
 	gpio_init();
 	i2c_init_board();
 	*/
