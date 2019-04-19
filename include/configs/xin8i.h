@@ -108,6 +108,18 @@
 /* baudrate */
 #define CONFIG_BAUDRATE			115200
 
+#ifndef CONFIG_CONS_INDEX
+#define CONFIG_CONS_INDEX              1       /* UART0 */
+#endif
+
+#ifdef CONFIG_REQUIRE_SERIAL_CONSOLE
+#if CONFIG_CONS_INDEX == 1
+#define OF_STDOUT_PATH		"/soc@01c00000/serial@01c28000:115200"
+#else
+#error Unsupported console port nr. Please fix stdout-path in sunxi-common.h.
+#endif
+#endif
+
 #define CONFIG_SPL_LDSCRIPT "arch/arm/cpu/armv7/xinjie/u-boot-spl.lds"
 
 

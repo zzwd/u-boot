@@ -7,5 +7,6 @@
 #ifndef _XINJIE_CPU_H
 #define _XINJIE_CPU_H
 
+#include <asm/arch/cpu_xin8i.h>
 
 #endif /* _XINJIE_CPU_H */

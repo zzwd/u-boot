@@ -7,5 +7,7 @@
 # Wolfgang Denk, DENX Software Engineering, wd@denx.de.
 obj-y	+= timer.o
 obj-y	+= board.o
-
-
+obj-y	+= clock.o
+obj-y	+= clock_xin8i.o
+obj-y	+= tzpc.o
+obj-y	+= prcm.o
