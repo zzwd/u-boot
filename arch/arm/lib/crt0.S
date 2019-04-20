@@ -16,7 +16,7 @@
 /*
  * This file handles the target-independent stages of the U-Boot
  * start-up where a C runtime environment is needed. Its entry point
- * is _main and is branched into from the target's start.S file.
+ * is _main and is branched into from the target is start.S file.
  *
  * _main execution sequence is:
  *
@@ -57,7 +57,7 @@
  *
  * 7. Branch to board_init_r().
  *
- * For more information see 'Board Initialisation Flow in README.
+ * For more information see Board Initialisation Flow in README.
  */
 
 /*
@@ -68,33 +68,34 @@ ENTRY(_main)
 
 /*
  * Set up initial C runtime environment and call board_init_f(0).
+ * 设置C环境，调用board_init_f
  */
 
 #if defined(CONFIG_SPL_BUILD) && defined(CONFIG_SPL_STACK)
-	ldr	sp, =(CONFIG_SPL_STACK)
+	ldr	sp, =(CONFIG_SPL_STACK) 	/*sp指向SRAM 32KiB的位置*/
 #else
-	ldr	sp, =(CONFIG_SYS_INIT_SP_ADDR)
+	ldr	sp, =(CONFIG_SYS_INIT_SP_ADDR) /*sp指向SRAM （32KiB - GD_SIZE）的位置*/
 #endif
 #if defined(CONFIG_CPU_V7M)	/* v7M forbids using SP as BIC destination */
 	mov	r3, sp
 	bic	r3, r3, #7
 	mov	sp, r3
 #else
-	bic	sp, sp, #7	/* 8-byte alignment for ABI compliance */
+	bic	sp, sp, #7	/* 8-byte alignment for ABI compliance，8字节对齐，将sp 低3位清零*/
 #endif
 	mov	r2, sp
-	sub	sp, sp, #GD_SIZE	/* allocate one GD above SP */
+	sub	sp, sp, #GD_SIZE	/* allocate one GD above SP, sp重新赋值sp=sp-GD_SIZE，GD_SIZE在新sp的上面 */
 #if defined(CONFIG_CPU_V7M)	/* v7M forbids using SP as BIC destination */
 	mov	r3, sp
 	bic	r3, r3, #7
 	mov	sp, r3
 #else
-	bic	sp, sp, #7	/* 8-byte alignment for ABI compliance */
+	bic	sp, sp, #7	/* 8-byte alignment for ABI compliance，8字节对齐，将sp 低3位清零*/
 #endif
-	mov	r9, sp		/* GD is above SP */
+	mov	r9, sp		/* sp保存到r9，后面通过r9访问sp*/
 	mov	r1, sp
 	mov	r0, #0
-clr_gd:
+clr_gd: 			/* GD 清零*/
 	cmp	r1, r2			/* while not at end of GD */
 #if defined(CONFIG_CPU_V7M)
 	itt	lo
@@ -102,18 +103,18 @@ clr_gd:
 	strlo	r0, [r1]		/* clear 32-bit GD word */
 	addlo	r1, r1, #4		/* move to next */
 	blo	clr_gd
-#if defined(CONFIG_SYS_MALLOC_F_LEN)
-	sub	sp, sp, #CONFIG_SYS_MALLOC_F_LEN
-	str	sp, [r9, #GD_MALLOC_BASE]
+#if defined(CONFIG_SYS_MALLOC_F_LEN) 
+	sub	sp, sp, #CONFIG_SYS_MALLOC_F_LEN  /*如果定义了CONFIG_SYS_MALLOC_F_LEN，sp再下移CONFIG_SYS_MALLOC_F_LEN=0x400*/
+	str	sp, [r9, #GD_MALLOC_BASE] 			/*然后将该地址保存到sp（r9中）的malloc_base成员中*/
 #endif
-	/* mov r0, #0 not needed due to above code */
-	bl	board_init_f
+	/* mov r0, #0  /* not needed due to above code */
+	bl	board_init_f  /*调用board_init_f，SPL阶段和Uboot阶段调用的不一样*/
 
 #if ! defined(CONFIG_SPL_BUILD)
 
 /*
  * Set up intermediate environment (new sp and gd) and call
- * relocate_code(addr_moni). Trick here is that we'll return
+ * relocate_code(addr_moni). Trick here is that we will return
  * 'here' but relocated.
  */
 

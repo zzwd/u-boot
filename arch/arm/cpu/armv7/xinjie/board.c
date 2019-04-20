@@ -61,7 +61,13 @@ u32 spl_boot_device(void)
 
 void board_init_f(ulong dummy)
 {
-	
+	preloader_console_init(); /*console初始化*/
+
+#ifdef CONFIG_SPL_I2C_SUPPORT
+	/* Needed early by sunxi_board_init if PMU is enabled */
+	//i2c_init(CONFIG_SYS_I2C_SPEED, CONFIG_SYS_I2C_SLAVE);
+#endif
+	//sunxi_board_init();
 }
 #endif
 

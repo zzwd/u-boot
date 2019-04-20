@@ -158,20 +158,20 @@ int spl_init(void)
 	gd->malloc_ptr = 0;
 #endif
 	if (CONFIG_IS_ENABLED(OF_CONTROL)) {
-		ret = fdtdec_setup();
+		ret = fdtdec_setup(); /*设备树设置起始地址和检测设备树版本信息*/
 		if (ret) {
 			debug("fdtdec_setup() returned error %d\n", ret);
 			return ret;
 		}
 	}
-	if (IS_ENABLED(CONFIG_SPL_DM)) {
-		ret = dm_init_and_scan(true);
+	if (IS_ENABLED(CONFIG_SPL_DM)) { 	/*CONFIG_SPL_DM = false*/
+		ret = dm_init_and_scan(true); /*uboot驱动模型简称DM，DM初始化和扫描设备树完成设备和驱动的绑定，SPL*/
 		if (ret) {
 			debug("dm_init_and_scan() returned error %d\n", ret);
 			return ret;
 		}
 	}
-	gd->flags |= GD_FLG_SPL_INIT;
+	gd->flags |= GD_FLG_SPL_INIT; /*设置spl初始化标志*/
 
 	return 0;
 }

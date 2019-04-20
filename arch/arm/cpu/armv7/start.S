@@ -70,6 +70,10 @@ save_boot_params_ret:
 	bl	cpu_init_crit 	/*调用lowlevel_init板级初始化*/
 #endif
 
+#ifdef CONFIG_DEBUG_LED
+	bl 	debug_led
+#endif
+
 	bl	_main			/*调用C代码*/
 
 /*------------------------------------------------------------------------------*/
@@ -269,10 +273,6 @@ ENTRY(cpu_init_crit)
 	 * basic memory. Go here to bump up clock rate and handle
 	 * wake up conditions.
 	 */
-#ifdef CONFIG_DEBUG_LED
-	bl 	debug_led
-#endif
-
 	b	lowlevel_init		@ go setup pll,mux,memory  /*初始化PLL时钟、mux和内存*/
 ENDPROC(cpu_init_crit)
 #endif
