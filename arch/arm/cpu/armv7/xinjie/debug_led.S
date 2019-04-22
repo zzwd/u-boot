@@ -9,10 +9,14 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
+area codeseg,code,readonly
+export debug_led
+
 #include <linux/linkage.h>
 
 #define PACFG1		0x01C20804
 #define PADAT		0x01C20810
+
 
 ENTRY(debug_led)
 

@@ -70,10 +70,6 @@ save_boot_params_ret:
 	bl	cpu_init_crit 	/*调用lowlevel_init板级初始化*/
 #endif
 
-#ifdef CONFIG_DEBUG_LED
-	bl 	debug_led
-#endif
-
 	bl	_main			/*调用C代码*/
 
 /*------------------------------------------------------------------------------*/

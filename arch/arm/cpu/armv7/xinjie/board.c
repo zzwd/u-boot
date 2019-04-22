@@ -20,6 +20,8 @@
 
 #include <linux/compiler.h>
 
+extern void debug_led(void);
+
 static int gpio_init(void)
 {
 	/*配置UART0*/
@@ -61,6 +63,8 @@ u32 spl_boot_device(void)
 
 void board_init_f(ulong dummy)
 {
+	debug_led();
+	
 	preloader_console_init(); /*console初始化*/
 
 #ifdef CONFIG_SPL_I2C_SUPPORT
